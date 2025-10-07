@@ -70,3 +70,44 @@ variable "skip_destroy" {
   description = "Whether to retain the public access block upon destruction."
   default     = true
 }
+
+
+# ==============================================================================
+# s3 bucket policy
+# ==============================================================================
+variable "policy" {
+  type        = string
+  description = "A valid policy JSON document."
+  default     = ""
+}
+
+
+# ==============================================================================
+# s3 bucket ownership controls
+# ==============================================================================
+variable "object_ownership" {
+  type        = string
+  description = "The Object Ownership setting that you want to apply to this bucket."
+  default     = "BucketOwnerPreferred"
+}
+
+
+# ==============================================================================
+# s3 bucket acl
+# ==============================================================================
+variable "acl" {
+  type        = string
+  description = "The canned ACL to apply. Defaults to 'private'."
+  default     = "private"
+}
+
+
+# ==============================================================================
+# s3 upload object
+# ==============================================================================
+variable "objects" {
+  type        = list(string)
+  description = "The object key for the uploaded object."
+  default     = []
+
+}
