@@ -8,7 +8,7 @@
 - Modify README.md
 
 ### Changed
-- Nothing to change
+- Remove Dependencies in source arguments (before is source = "../s3-module")
 
 ### Fixed
 - Fixing Uploading Objects

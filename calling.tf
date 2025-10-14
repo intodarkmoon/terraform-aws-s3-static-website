@@ -12,7 +12,7 @@ provider "aws" {
 
 
 module "static_website" {
-  source = "../s3-module" # Path to your module
+  source  = "intodarkmoon/s3-static-website/aws"
 
   # Bucket configuration
   bucket_name         = "my-static-website"
