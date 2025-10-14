@@ -1,3 +1,7 @@
+# =====================================================================================
+# VARIABLES
+# =====================================================================================
+
 # ==============================================================================
 # s3 bucket variables
 # ==============================================================================
@@ -103,11 +107,41 @@ variable "acl" {
 
 
 # ==============================================================================
+# web configuration
+# ==============================================================================
+variable "enable_static_website" {
+  type        = bool
+  description = "Whether to configure the bucket for static website hosting"
+  default     = false
+}
+
+variable "index_document" {
+  type        = string
+  description = "The name of the index document"
+  default     = "index.html"
+}
+
+variable "error_document" {
+  type        = string
+  description = "The name of the error document"
+  default     = "error.html"
+}
+
+
+# ==============================================================================
 # s3 upload object
 # ==============================================================================
-variable "objects" {
-  type        = list(string)
-  description = "The object key for the uploaded object."
-  default     = []
+variable "website_files" {
+  type = map(object({
+    file_path    = string
+    content_type = optional(string)
+  }))
+  description = "Map of website files to upload. Key is the object key in S3, value contains file_path and optional content_type"
+  default     = {}
+}
 
+variable "upload_website_files" {
+  type        = bool
+  description = "Whether to upload website files"
+  default     = false
 }

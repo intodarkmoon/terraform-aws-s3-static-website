@@ -1,5 +1,6 @@
-
-
+# =====================================================================================
+# MAIN
+# =====================================================================================
 
 resource "aws_s3_bucket" "my-static-website" {
   region              = var.region
@@ -42,16 +43,32 @@ resource "aws_s3_bucket_acl" "bucket-acl" {
 
 }
 
-resource "aws_s3_object" "objects" {
-  for_each = var.objects
+
+resource "aws_s3_bucket_website_configuration" "website" {
+  count = var.enable_static_website ? 1 : 0
+
+  bucket = aws_s3_bucket.my-static-website.id
+
+  index_document {
+    suffix = var.index_document
+  }
+
+  error_document {
+    key = var.error_document
+  }
+}
+
+
+resource "aws_s3_object" "website-files" {
+  for_each = var.upload_website_files ? var.website_files : {}
 
   bucket       = aws_s3_bucket.my-static-website.id
-  key          = each.value.key
-  source       = each.value.source
-  etag         = filemd5(each.value.source)
-  acl          = each.value.acl
+  key          = each.key
+  source       = each.value.file_path
+  etag         = filemd5(each.value.file_path)
   content_type = lookup(each.value, "content_type", null)
 
-  depends_on = [aws_s3_bucket_acl.bucket-acl]
-
+  depends_on = [
+    aws_s3_bucket_acl.bucket-acl
+  ]
 }
