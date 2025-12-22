@@ -11,8 +11,9 @@ provider "aws" {
 }
 
 
-module "static_website" {
-  source  = "intodarkmoon/s3-static-website/aws"
+module "s3-static-website" {
+  source = "../"
+
 
   # Bucket configuration
   bucket_name         = "my-static-website"
@@ -75,23 +76,23 @@ data "aws_iam_policy_document" "website_policy" {
       "s3:GetObject"
     ]
     resources = [
-      "${module.static_website.bucket_arn}/*"
+      "${module.s3-static-website.bucket_arn}/*"
     ]
   }
 }
 
-# Output the website URL
+# # Output the website URL
 output "website_url" {
   description = "URL of the static website"
-  value       = module.static_website.website_endpoint
+  value       = module.s3-static-website.website_endpoint
 }
 
 output "bucket_name" {
   description = "Name of the S3 bucket"
-  value       = module.static_website.bucket_id
+  value       = module.s3-static-website.bucket_id
 }
 
-output "website_domain" {
+output "website_domain_s3" {
   description = "Domain of the static website"
-  value       = module.static_website.website_domain
+  value       = module.s3-static-website.website_domain
 }

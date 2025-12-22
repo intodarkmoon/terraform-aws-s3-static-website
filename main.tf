@@ -3,7 +3,6 @@
 # =====================================================================================
 
 resource "aws_s3_bucket" "my-static-website" {
-  region              = var.region
   bucket              = var.bucket_name
   bucket_prefix       = var.bucket_prefix
   force_destroy       = var.force_destroy

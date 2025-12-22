@@ -6,12 +6,6 @@
 # s3 bucket variables
 # ==============================================================================
 
-variable "region" {
-  type        = string
-  description = "Region where this resource will be managed. Defaults to the Region set in the provider configuration."
-  default     = ""
-}
-
 variable "bucket_name" {
   type        = string
   description = "Name of the bucket"

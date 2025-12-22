@@ -1,0 +1,35 @@
+name : terraform-ci
+
+on:
+  push:
+    branches:
+      - darkmoon
+  pull_request:
+    branches:
+      - darkmoon
+  workflow_dispatch:
+    branches:
+      - darkmoon
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository # Get terraform scripts
+        uses: actions/checkout@v3
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.7
+
+      - name: Initialize Terraform 
+        run: terraform init -backend=false
+
+      - name: Validate Terraform configuration
+        run: terraform validate
+
+      - name: Format Terraform code
+        run: terraform fmt -check -recursive
+
+      - name: Show Terraform version
+        run: terraform version

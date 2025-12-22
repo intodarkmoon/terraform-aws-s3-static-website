@@ -24,15 +24,10 @@ output "bucket_domain_name" {
 
 output "website_endpoint" {
   description = "The website endpoint URL"
-  value       = aws_s3_bucket.my-static-website.website_endpoint
+  value       = one(aws_s3_bucket_website_configuration.website[*].website_endpoint)
 }
 
 output "website_domain" {
   description = "The domain of the website endpoint"
-  value       = aws_s3_bucket.my-static-website.website_domain
-}
-
-output "uploaded_objects" {
-  description = "List of uploaded objects"
-  value       = keys(var.website_files)
+  value       = one(aws_s3_bucket_website_configuration.website[*].website_domain)
 }
